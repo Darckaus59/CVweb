@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrousel de Projets</title>
+    <style>
+        /* Styles de base */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .arrow {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+            margin: 0 10px;
+            z-index: 10;
+        }
+
+        .arrow:hover {
+            background-color: #45a049;
+        }
+
+        .carousel {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cards {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: calc(100% * 3); /* Ajustez en fonction du nombre de cards */
+        }
+
+        .card {
+            flex: 0 0 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 400px;
+            max-height: 100%;
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-content {
+            overflow-y: auto;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .card h2 {
+            margin: 0 0 15px;
+            font-size: 28px;
+            color: #4CAF50;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Responsiveness */
+        @media (min-width: 768px) {
+            .card h2 {
+                font-size: 32px;
+            }
+
+            .card p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Bouton précédent -->
+    <button class="arrow" id="prev">◀</button>
+
+    <!-- Conteneur des cartes -->
+    <div class="carousel">
+        <div class="cards">
+            <div class="card">
+                <div class="card-content">
+                    <h2>SAÉ 2.01 + 2.02 dev d’une application et exploration algorithmique</h2>
+                    <p>
+                        La SAE 2.02, consacrée au développement d'une application et à l'exploration algorithmique, a pour but d'apprendre à utiliser une bibliothèque spécifique pour créer une application répondant à des critères techniques précis. Le projet consistait à développer une application capable de calculer les trajets les plus courts entre deux villes en tenant compte de plusieurs modes de transport comme le train ou l'avion, et en évaluant divers critères tels que le prix, la durée et les émissions de CO2. Pour ce faire, nous avons utilisé une bibliothèque fournie pour créer un graphe, tout en nous chargeant également de la partie interface utilisateur (IHM). Nous avons conçu une application visuelle permettant à l'utilisateur de saisir les informations nécessaires et de recevoir les trajets correspondants.
+
+                    </p>
+                    <div class="section">
+                        <h2>Compétences techniques visées</h2>
+                        <div class="skills">
+                            <div class="skill">La programmation en Java </div>
+                            <div class="skill">L’utilisation de bibliothèques externes</div>
+                            <div class="skill">Le prototypage avec Figma </div>
+                            <div class="skill">Le développement avec JavaFX</div>
+                            <!-- Ajoutez d'autres compétences si nécessaire -->
+                        </div>
+                        <h2>Savoirs êtres</h2>
+                        <div class="skill"><h3>Autonomie et initiative :</h3><p>Aptitude à travailler de manière autonome pour explorer et maîtriser la bibliothèque fournie, ainsi que pour résoudre les problèmes techniques qui peuvent survenir.</p></div>
+                        <div class="skill"><h3>Collaboration et communication :</h3><p>Compétences en communication pour discuter des choix techniques, partager les progrès, et résoudre les éventuels désaccords de manière constructive.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h2>Projet 2</h2>
+                    <p>
+                        Description du projet 2. Voici quelques fonctionnalités...
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h2>Projet 3</h2>
+                    <p>
+                        Description du projet 3. Ce projet est vraiment spécial.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton suivant -->
+    <button class="arrow" id="next">▶</button>
+</div>
+
+<script>
+    // Sélection des éléments
+    const cardsContainer = document.querySelector('.cards');
+    const cards = document.querySelectorAll('.card');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    const totalCards = cards.length;
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    // Fonction pour mettre à jour la position des cartes
+    function updateCards() {
+        // Calculer la largeur réelle d'une carte
+        const cardWidth = cards[0].offsetWidth; // Largeur d'une seule card
+        const newTranslateX = -(currentIndex * cardWidth);
+
+        // Appliquer la translation exacte
+        cardsContainer.style.transform = `translateX(${newTranslateX}px)`;
+    }
+
+    // Navigation avec les boutons
+    prevButton.addEventListener('click', () => {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        // Aller à la carte précédente
+        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+
+        updateCards();
+
+        // Bloquer temporairement les actions durant l'animation
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        // Aller à la carte suivante
+        currentIndex = (currentIndex + 1) % totalCards;
+
+        updateCards();
+
+        // Bloquer temporairement les actions durant l'animation
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
+    });
+
+    // Glisser avec le doigt ou la souris
+    let startX = 0;
+    let isDragging = false;
+    let swipeThreshold = 50; // Distance minimale pour considérer un swipe valide
+
+    cardsContainer.addEventListener('mousedown', startDrag);
+    cardsContainer.addEventListener('touchstart', startDrag);
+    cardsContainer.addEventListener('mousemove', dragMove);
+    cardsContainer.addEventListener('touchmove', dragMove);
+    cardsContainer.addEventListener('mouseup', endDrag);
+    cardsContainer.addEventListener('touchend', endDrag);
+    cardsContainer.addEventListener('mouseleave', endDrag);
+
+    function startDrag(e) {
+        isDragging = true;
+        startX = e.type === 'touchstart' ? e.touches[0].clientX : e.pageX;
+        cardsContainer.style.transition = "none"; // Désactiver temporairement la transition
+    }
+
+    function dragMove(e) {
+        if (!isDragging) return;
+        const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.pageX;
+        const deltaX = currentX - startX;
+
+        // Calculer la largeur d'une card
+        const cardWidth = cards[0].offsetWidth;
+
+        // Appliquer le mouvement temporaire
+        cardsContainer.style.transform = `translateX(calc(-${currentIndex * cardWidth}px + ${deltaX}px))`;
+    }
+
+    function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        const endX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.pageX;
+        const deltaX = endX - startX;
+
+        // Si le mouvement dépasse le seuil, naviguer
+        if (deltaX > swipeThreshold) {
+            currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+        } else if (deltaX < -swipeThreshold) {
+            currentIndex = (currentIndex + 1) % totalCards;
+        }
+
+        // Renvoyer à la position correcte
+        cardsContainer.style.transition = "transform 0.5s ease-in-out";
+        updateCards();
+    }
+
+    // S'assurer que la position initiale est correcte
+    window.addEventListener('resize', updateCards);
+    updateCards(); // Appel initial
+</script>
+
+
+</body>
+</html>
