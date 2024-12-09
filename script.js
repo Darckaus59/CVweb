@@ -99,3 +99,37 @@ function endDrag(e) {
     cardsContainer.style.transition = "transform 0.5s ease-in-out";
     updateCards();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navIndicator = document.querySelector('.nav-indicator');
+
+    const updateIndicator = (element) => {
+        const rect = element.getBoundingClientRect();
+        const containerRect = element.closest('.nav-container').getBoundingClientRect();
+        navIndicator.style.width = `${rect.width}px`;
+        navIndicator.style.left = `${rect.left - containerRect.left}px`;
+    };
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            link.classList.add('active');
+            updateIndicator(link);
+            setTimeout(() => {
+                window.location.href = link.getAttribute('href');
+            }, 300);
+        });
+    });
+
+    // Initial update
+    const activeLink = document.querySelector('.nav-link.active');
+    if (activeLink) updateIndicator(activeLink);
+
+    window.addEventListener('resize', () => {
+        const activeLink = document.querySelector('.nav-link.active');
+        if (activeLink) updateIndicator(activeLink);
+    });
+});
+
