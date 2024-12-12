@@ -1,3 +1,19 @@
+:root {
+    --primary-color: #4CAF50;
+    --text-color: #333;
+    --background-color: #f0f4f3;
+}
+
+.name h1 {
+    margin: 0 0 20px;
+    font-size: 36px;
+    text-align: center;
+    background: var(--primary-color);
+    color: white;
+
+}
+
+
 /* Reset CSS */
 * {
     margin: 0;
@@ -219,6 +235,45 @@ form button:hover {
     transform: rotateY(0);
 }
 
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.skill {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .skills {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .skill {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .skills {
+        flex-direction: column;
+    }
+
+    .skill {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
 
 
 .navbar li:nth-child(1):hover ~ .highlight {
