@@ -11,35 +11,45 @@ document.querySelectorAll('.project-card').forEach(card => {
 document.addEventListener('DOMContentLoaded', () => {
     const highlight = document.querySelector('.highlight');
     const links = document.querySelectorAll('.navbar a');
+    const activeLink = document.querySelector('.navbar a.active');
 
-    const updateHighlight = () => {
-        const activeLink = document.querySelector('.navbar a.active');
-        if (activeLink) {
-            const linkRect = activeLink.getBoundingClientRect();
-            const navRect = activeLink.parentElement.parentElement.getBoundingClientRect();
-            highlight.style.width = `${linkRect.width}px`;
-            highlight.style.height = `40px`;
-            highlight.style.transform = `translateX(${linkRect.left - navRect.left}px)`;
-        }
+    const updateHighlight = (link) => {
+        const linkRect = link.getBoundingClientRect();
+        const navRect = link.closest('.navbar').getBoundingClientRect();
+        highlight.style.width = `${linkRect.width}px`;
+        highlight.style.transform = `translateX(${linkRect.left - navRect.left}px)`;
     };
 
     // Initial placement on page load
-    updateHighlight();
+    if (activeLink) {
+        updateHighlight(activeLink);
+    }
 
-    // Update placement on hover
+    // Update placement and styling on hover
     links.forEach(link => {
-        link.addEventListener('mouseenter', (e) => {
-            const linkRect = e.target.getBoundingClientRect();
-            const navRect = e.target.parentElement.parentElement.getBoundingClientRect();
-            highlight.style.width = `${linkRect.width}px`;
-            highlight.style.transform = `translateX(${linkRect.left - navRect.left}px)`;
+        link.addEventListener('mouseenter', () => {
+            // Move the highlight
+            updateHighlight(link);
+
+            // Add the "hovered" class to the active link
+            if (activeLink && activeLink !== link) {
+                activeLink.classList.add('hovered');
+            }
         });
 
         link.addEventListener('mouseleave', () => {
-            updateHighlight();
+            // Return the highlight to the active link
+            if (activeLink) {
+                updateHighlight(activeLink);
+                activeLink.classList.remove('hovered');
+            }
         });
     });
 
-    // Recalculate on window resize
-    window.addEventListener('resize', updateHighlight);
+    // Recalculate position on window resize
+    window.addEventListener('resize', () => {
+        if (activeLink) {
+            updateHighlight(activeLink);
+        }
+    });
 });

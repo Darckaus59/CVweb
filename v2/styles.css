@@ -21,43 +21,60 @@ header {
     z-index: 1000;
 }
 
+/* Barre de navigation */
 .navbar {
+    position: relative; /* Contexte d'empilement */
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
     list-style: none;
+    background: #f8f9fa; /* Couleur de la navbar */
+    padding: 0.5rem;
+    margin: 0;
+    z-index: 1; /* Assure que la navbar est un contexte d'empilement */
+}
+/* .navbar li {
+    margin: 0 1rem;
+} */
+.navbar li {
     position: relative;
+    z-index: 3; /* Place les liens devant la dragée */
 }
 
-.navbar li {
-    margin: 0 1rem;
-}
+
 
 .navbar a {
+    position: relative; /* Assure que les liens respectent le z-index */
     text-decoration: none;
-    color: #333;
-    font-size: 1.2rem;
-    position: relative;
-    z-index: 2;
-    transition: color 0.3s ease;
+    color: #333; /* Couleur normale du texte */
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease; /* Transition pour la couleur */
 }
 
 .navbar a.active {
     color: #fff;
+    z-index: 3;
+}
+
+/* Couleur du lien actif lorsqu’un autre lien est survolé */
+.navbar a.active.hovered {
+    color: #28a745; /* Vert pour le lien actif temporairement */
 }
 
 .highlight {
-    position: absolute;
-    width: 120px;
-    height: 40px;
-    background: #28a745;
+    position: absolute; /* Positionnement dans le contexte de la navbar */
+    top: 0em;
+    left: 0;
+    height: 100%;
+    background: #28a745; /* Couleur verte */
     border-radius: 20px;
-    transition: all 0.3s ease;
-    z-index: 1;
-    transform: translateX(0);
+    z-index: 2; /* Entre la navbar et les liens */
+    transition: transform 0.8s ease, width 0.8s ease; /* Animation fluide */
 }
 
 .navbar li:nth-child(1) .highlight { transform: translateX(0); }
-.navbar li:nth-child(2):hover ~ .highlight { transform: translateX(120px); }
+.navbar li:nth-child(2):hover ~ .highlight { transform: translateX(200px); }
 
 /* Autres styles */
 main {
@@ -202,16 +219,7 @@ form button:hover {
     transform: rotateY(0);
 }
 
-.highlight {
-    position: absolute;
-    width: 120px;
-    height: 40px;
-    background: #28a745;
-    border-radius: 20px;
-    transition: all 0.3s ease-in-out;
-    z-index: 1;
-    transform: translateX(0);
-}
+
 
 .navbar li:nth-child(1):hover ~ .highlight {
     transform: translateX(0);
@@ -235,6 +243,7 @@ form button:hover {
     .navbar {
         flex-direction: column;
         align-items: center;
+        z-index: 1;
     }
 
     .projects-grid {
@@ -254,9 +263,11 @@ form button:hover {
 
     .navbar li {
         margin: 0.5rem 0;
+        z-index: 3;
     }
 
     .highlight {
         height: 30px;
+        z-index: 2;
     }
 }
