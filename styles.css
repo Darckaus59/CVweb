@@ -13,21 +13,28 @@
 
 }
 
+/* Le contenu principal de la page */
 
 /* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+body, html {
+    height: 100%; /* S'assure que la page occupe toute la hauteur de la fenêtre */
+    margin: 0; /* Retire les marges par défaut */
 }
 
 body {
+    display: flex;
+    flex-direction: column; /* Aligne les éléments dans une colonne */
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background: #f4f4f4;
     color: #333;
 }
 
+.main-content {
+    flex: 1; /* Permet au contenu de prendre l'espace restant */
+    padding: 20px; /* Espace autour du contenu */
+}
 /* Barre de navigation */
 header {
     background: #f0f0f0;
@@ -309,6 +316,16 @@ form button:hover {
         padding: 1rem;
         max-width: 90%;
     }
+}
+
+footer {
+    background-color: #f1f1f1; /* Couleur de fond du footer */
+    padding: 10px 0; /* Espacement du footer */
+    text-align: center; /* Centrer le texte */
+    width: 100%; /* Prendre toute la largeur de la page */
+
+    position: fixed;
+    bottom:0
 }
 
 @media (max-width: 480px) {
